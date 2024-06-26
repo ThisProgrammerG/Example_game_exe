@@ -79,7 +79,7 @@ class SpriteSpecification(NamedTuple):
     frame_rate: int
 
 
-def load_sprite_sheet(path):
+def load_sprite_sheet(path: Path):
     surface = pygame.image.load(path).convert_alpha()
     surface_rect = surface.get_rect()
 
