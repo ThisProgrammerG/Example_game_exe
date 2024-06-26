@@ -89,18 +89,16 @@ def load_sprite_sheet(path):
 
     sprite_specifications = SpriteSpecification(*specifications.values())
 
-    if sprite_specifications.scale > 1:
-        surface = pygame.transform.scale_by(surface, sprite_specifications.scale)
-        surface_rect = surface.get_rect()
-
     width = surface_rect.width // sprite_specifications.columns
     height = surface_rect.height // sprite_specifications.rows
 
     sprite_sheet = []
-    for row in range(0, surface_rect.height, height):
-        for column in range(0, surface_rect.width, width):
-            rect = (column, row), (width, height)
+    for row in range(sprite_specifications.rows):
+        for column in range(sprite_specifications.columns):
+            rect = (column * width, row * height), (width, height)
             image = surface.subsurface(rect)
+            if sprite_specifications.scale > 1:
+                image = pygame.transform.scale_by(image, sprite_specifications.scale)
             sprite_sheet.append(image)
 
     return Animation(sprite_sheet, frame_rate=sprite_specifications.frame_rate)
